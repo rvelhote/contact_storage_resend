@@ -1,0 +1,6 @@
+entity.contact_message.resend_form:
+  path: '/admin/structure/contact/messages/{contact_message}/resend'
+  defaults:
+    _form: '\Drupal\contact_storage_resend\Form\ResendForm'
+  requirements:
+    _permission: 'administer contact forms'

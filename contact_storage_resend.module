@@ -1,0 +1,66 @@
+<?php
+/**
+ * MIT License
+ *
+ * Copyright (c) 2016 Ricardo Velhote
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function contact_storage_resend_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the translationtabs module.
+    case 'help.page.translationtabs':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Adds tabs to entities to allow faster translation and the translation status.') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_entity_operation().
+ */
+function contact_storage_resend_entity_operation(EntityInterface $entity) {
+  $operations = [];
+
+  if($entity->getEntityTypeId() === 'contact_message') {
+    $operations['contact_storage_resend'] = array(
+      'title' => t('Resend Message'),
+      'weight' => 100,
+      'url' => $entity->toUrl('resend-form'),
+    );
+  }
+
+  return $operations;
+}
+
+/**
+ * Implements hook_entity_type_alter().
+ */
+function contact_storage_resend_entity_type_alter(array &$entity_types) {
+  $entity_types['contact_message']->setLinkTemplate('resend-form', '/admin/structure/contact/messages/{contact_message}/resend');
+}

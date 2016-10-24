@@ -1,0 +1,14 @@
+{
+  "name": "drupal/contact_storage_resend",
+  "type": "drupal-module",
+  "description": "Allows an administrator to send (or resend) a message stored with the contact_storage module via email manually.",
+  "keywords": ["Drupal", "contact_storage", "contact"],
+  "license": "MIT",
+  "homepage": "https://www.drupal.org/project/contact_storage_resend",
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/contact_storage_resend",
+    "source": "http://cgit.drupalcode.org/contact_storage_resend"
+  },
+  "require": { }
+}
